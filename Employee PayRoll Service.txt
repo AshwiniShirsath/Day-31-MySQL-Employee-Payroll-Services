@@ -1,0 +1,128 @@
+mysql>create database payroll_service;
+Query OK, 1 row affected (0.003 sec)
+
+mysql> use payroll_service;
+Database changed
+mysql> create table employee_payroll(id int primary key auto_increment,name varchar(20),salary int,start_date date);
+Query OK, 0 rows affected (2.23 sec)
+
+mysql> insert into employee_payroll(name,salary,start_date) values('Nayan',1000,'2022-01-01');
+Query OK, 1 row affected (0.37 sec)
+
+mysql> insert into employee_payroll(name,salary,start_date) values('Neha',2000,'2022-01-02');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into employee_payroll(name,salary,start_date) values('Harsha',2500,'2022-02-02');
+Query OK, 1 row affected (0.40 sec)
+
+mysql> insert into employee_payroll(name,salary,start_date) values('Ashwini',3500,'2022-03-02');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from employee_payroll;
++----+---------+--------+------------+
+| id | name    | salary | start_date |
++----+---------+--------+------------+
+|  1 | Nayan   |   1000 | 2022-01-01 |
+|  2 | Neha    |   2000 | 2022-01-02 |
+|  3 | Harsha  |   2500 | 2022-02-02 |
+|  4 | Ashwini |   3500 | 2022-03-02 |
++----+---------+--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select salary from employee_payroll where name='Nayan';
++--------+
+| salary |
++--------+
+|   1000 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee_payroll where start_date between cast('2022-01-02' as date) and date(now());
++----+---------+--------+------------+
+| id | name    | salary | start_date |
++----+---------+--------+------------+
+|  2 | Neha    |   2000 | 2022-01-02 |
+|  3 | Harsha  |   2500 | 2022-02-02 |
+|  4 | Ashwini |   3500 | 2022-03-02 |
++----+---------+--------+------------+
+3 rows in set (0.04 sec)
+
+mysql> select sum(salary) from employee_payroll;
++-------------+
+| sum(salary) |
++-------------+
+|        9000 |
++-------------+
+1 row in set (0.02 sec)
+
+mysql> select avg(salary) from employee_payroll;
++-------------+
+| avg(salary) |
++-------------+
+|   2250.0000 |
++-------------+
+1 row in set (0.04 sec)
+
+mysql> select min(salary) from employee_payroll;
++-------------+
+| min(salary) |
++-------------+
+|        1000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select max(salary) from employee_payroll;
++-------------+
+| max(salary) |
++-------------+
+|        3500 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select count(salary) from employee_payroll;
++---------------+
+| count(salary) |
++---------------+
+|             4 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> alter table employee_payroll add column phone varchar(12),add column address varchar(50) default ('shahada'),add column department varchar(30) not null;
+Query OK, 4 rows affected (1.28 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> alter table employee_payroll add column basic_pay int, add column deductions int, add column taxable_pay int, add column income_tax int, add column net_pay int;
+Query OK, 0 rows affected (0.32 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employee_payroll;
++-------------+-------------+------+-----+-------------------+-------------------+
+| Field       | Type        | Null | Key | Default           | Extra             |
++-------------+-------------+------+-----+-------------------+-------------------+
+| id          | int         | NO   | PRI | NULL              | auto_increment    |
+| name        | varchar(20) | YES  |     | NULL              |                   |
+| salary      | int         | YES  |     | NULL              |                   |
+| start_date  | date        | YES  |     | NULL              |                   |
+| phone       | varchar(12) | YES  |     | NULL              |                   |
+| address     | varchar(50) | YES  |     | _cp850\'shahada\' | DEFAULT_GENERATED |
+| department  | varchar(30) | NO   |     | NULL              |                   |
+| basic_pay   | int         | YES  |     | NULL              |                   |
+| deductions  | int         | YES  |     | NULL              |                   |
+| taxable_pay | int         | YES  |     | NULL              |                   |
+| income_tax  | int         | YES  |     | NULL              |                   |
+| net_pay     | int         | YES  |     | NULL              |                   |
++-------------+-------------+------+-----+-------------------+-------------------+
+12 rows in set (0.29 sec)
+
+mysql> select * from employee_payroll;
++----+---------+--------+------------+-------+---------+------------+-----------+------------+-------------+------------+---------+
+| id | name    | salary | start_date | phone | address | department | basic_pay | deductions | taxable_pay | income_tax | net_pay |
++----+---------+--------+------------+-------+---------+------------+-----------+------------+-------------+------------+---------+
+|  1 | Nayan   |   1000 | 2022-01-01 | NULL  | shahada |            |      NULL |       NULL |        NULL |       NULL |    NULL |
+|  2 | Neha    |   2000 | 2022-01-02 | NULL  | shahada |            |      NULL |       NULL |        NULL |       NULL |    NULL |
+|  3 | Harsha  |   2500 | 2022-02-02 | NULL  | shahada |            |      NULL |       NULL |        NULL |       NULL |    NULL |
+|  4 | Ashwini |   3500 | 2022-03-02 | NULL  | shahada |            |      NULL |       NULL |        NULL |       NULL |    NULL |
++----+---------+--------+------------+-------+---------+------------+-----------+------------+-------------+------------+---------+
+4 rows in set (0.00 sec)
+
+mysql>
